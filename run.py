@@ -1,0 +1,33 @@
+import json, requests, shutil, re
+from os import path
+
+def formatPokemonId(id):
+  return str(id).zfill(3)
+
+def formatPokemonName(name):
+  return name.lower().replace("-female", "-f").replace("-male", "-m").replace("meowstic", "meowstic-m")
+
+f = open("pokemons.json", "r", encoding="utf8")
+pkms = json.loads(f.read())
+f.close()
+
+# Get pokemon Gifs
+for pkm in pkms:
+  if not path.exists("media/ingame-gif/%s.gif" % formatPokemonId(pkm['number'])):
+    name = formatPokemonName(pkm['slug'])
+    img = requests.get("https://www.smogon.com/dex/media/sprites/xy/%s.gif" % name, stream=True)
+    file = open("media/ingame-gif/%s.gif" % formatPokemonId(pkm['number']), "wb")
+    img.raw.decode_content = True
+    shutil.copyfileobj(img.raw, file)
+    del img
+print("Gif Done!")
+
+# Get pokemon images
+for pkm in pkms:
+  if not path.exists("media/ingame-png/%s.png" % formatPokemonId(pkm['number'])):
+    img = requests.get("https://serebii.net/swordshield/pokemon/%s.png" % formatPokemonId(pkm['number']), stream=True)
+    file = open("media/ingame-png/%s.png" % formatPokemonId(pkm['number']), "wb")
+    img.raw.decode_content = True
+    shutil.copyfileobj(img.raw, file)
+    del img
+print("Png Done!")
