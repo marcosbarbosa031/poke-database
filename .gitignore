@@ -113,4 +113,6 @@ debug.log
 # Virtualenv
 venv
 
+.vscode
+
 # End of https://www.gitignore.io/api/python

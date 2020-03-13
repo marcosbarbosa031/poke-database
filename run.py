@@ -11,7 +11,7 @@ f = open("pokemons.json", "r", encoding="utf8")
 pkms = json.loads(f.read())
 f.close()
 
-# Get pokemon Gifs
+# Get Pokemon Ingame Gifs
 for pkm in pkms:
   if not path.exists("media/ingame-gif/%s.gif" % formatPokemonId(pkm['number'])):
     name = formatPokemonName(pkm['slug'])
@@ -22,11 +22,21 @@ for pkm in pkms:
     del img
 print("Gif Done!")
 
-# Get pokemon images
+# Get Pokemon Ingame Images
 for pkm in pkms:
   if not path.exists("media/ingame-png/%s.png" % formatPokemonId(pkm['number'])):
     img = requests.get("https://serebii.net/swordshield/pokemon/%s.png" % formatPokemonId(pkm['number']), stream=True)
     file = open("media/ingame-png/%s.png" % formatPokemonId(pkm['number']), "wb")
+    img.raw.decode_content = True
+    shutil.copyfileobj(img.raw, file)
+    del img
+print("Png Done!")
+
+# Get Pokemon Drawn Images
+for pkm in pkms:
+  if not path.exists("media/drawn-png/%s.png" % formatPokemonId(pkm['number'])):
+    img = requests.get("https://assets.pokemon.com/assets/cms2/img/pokedex/detail/%s.png" % formatPokemonId(pkm['number']), stream=True)
+    file = open("media/drawn-png/%s.png" % formatPokemonId(pkm['number']), "wb")
     img.raw.decode_content = True
     shutil.copyfileobj(img.raw, file)
     del img
