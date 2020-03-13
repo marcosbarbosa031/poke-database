@@ -20,7 +20,7 @@ for pkm in pkms:
     img.raw.decode_content = True
     shutil.copyfileobj(img.raw, file)
     del img
-print("Gif Done!")
+print("Ingame Gif Done!")
 
 # Get Pokemon Ingame Images
 for pkm in pkms:
@@ -30,7 +30,7 @@ for pkm in pkms:
     img.raw.decode_content = True
     shutil.copyfileobj(img.raw, file)
     del img
-print("Png Done!")
+print("Ingame Png Done!")
 
 # Get Pokemon Drawn Images
 for pkm in pkms:
@@ -40,4 +40,4 @@ for pkm in pkms:
     img.raw.decode_content = True
     shutil.copyfileobj(img.raw, file)
     del img
-print("Png Done!")
+print("Drawn Png Done!")
